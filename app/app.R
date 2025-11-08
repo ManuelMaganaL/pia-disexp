@@ -1,47 +1,73 @@
 library(shiny)
 library(bslib)
 
-# Define UI for app that draws a histogram ----
-ui <- page_sidebar(
-  # App title ----
-  title = "Hello Shiny!",
-  # Sidebar panel for inputs ----
-  sidebar = sidebar(
-    # Input: Slider for the number of bins ----
-    sliderInput(
-      inputId = "bins",
-      label = "Number of bins:",
-      min = 1,
-      max = 50,
-      value = 30
-    )
+# Definimos una página de tipo Navbar
+ui <- navbarPage("PIA", selected = "Introducción",
+  tabPanel("Introducción",
+    # Contenido de introducción
+    p("Aqui podemos explicar brevemente los temas del PIA"),
+    p("Si usamos un mismo dataset para los ejercicios podemos ponerlo aquí"),
   ),
-  # Output: Histogram ----
-  plotOutput(outputId = "distPlot")
+
+  tabPanel("Regresión Lineal",
+    # Contenido de regresión lineal
+    page_sidebar(
+      sidebar = sidebar(
+        p("Elige que columnas de <mtcars> quieres como variables."),
+        p("Prueba diferentes configuraciones para ver como cambia el gráfico"),
+        selectInput("xvar", "Var X:", choices = names(mtcars), selected = "wt"),
+        selectInput("yvar", "Var Y:", choices = names(mtcars), selected = "hp"),
+        checkboxInput("showLine", "Mostrar línea de regresión", value = TRUE),
+      ),
+
+      # Output: Gráfico de regresión lineal
+      card(
+        plotOutput(outputId = "lmPlot"),
+      ),
+    ),
+  ),
+
+  tabPanel("Tema 2",
+    # Contenido de Tema 2
+    "Aquí pondriamos otro tema de la materia"
+  ),
+
+  # Podemos seguir agregando mas tabs para otros temas o secciones
+  # IDEAS: Referencias, portada (al inicio)
 )
 
-# Define server logic required to draw a histogram ----
+
+# Logica del server
 server <- function(input, output) {
 
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
-  output$distPlot <- renderPlot({
+  # Render del gráfico de regresión lineal
+  output$lmPlot <- renderPlot({
+    # Variables elegidas
+    xvar <- input$xvar
+    yvar <- input$yvar
 
-    x    <- faithful$waiting
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    # Crear dataframe temporal
+    datos <- mtcars
+    x <- datos[[xvar]]
+    y <- datos[[yvar]]
 
-    hist(x, breaks = bins, col = "#007bc2", border = "white",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
+    # Ajuste del modelo lineal
+    modelo <- lm(y ~ x)
 
-    })
+    # Crear gráfico base
+    plot(
+      x, y,
+      main = paste("Regresión lineal de", yvar, "vs", xvar),
+      xlab = xvar,
+      ylab = yvar,
+      pch = 19, col = "blue"
+    )
 
+    # Línea de regresión
+    if (input$showLine) {
+      abline(modelo, col = "red", lwd = 2)
+    }
+  })
 }
 
 shinyApp(ui = ui, server = server)
