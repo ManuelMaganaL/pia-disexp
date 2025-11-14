@@ -4,7 +4,9 @@ library(bslib)
 # Definimos una página de tipo Navbar
 ui <- navbarPage("PIA", selected = "Introducción",
   tabPanel("Introducción",
-    # Contenido de introducción
+    tags$head(tags$meta(charset = "UTF-8")),  # Para acentos y ñ
+    h2("Diseño de Experimento"),
+    htmlOutput("tabla_html"),  # Aquí se renderiza la tabla    # Contenido de introducción
     p("Aqui podemos explicar brevemente los temas del PIA"),
     p("Si usamos un mismo dataset para los ejercicios podemos ponerlo aquí"),
   ),
@@ -39,6 +41,33 @@ ui <- navbarPage("PIA", selected = "Introducción",
 
 # Logica del server
 server <- function(input, output) {
+
+   nombres_html <- c( #Agregado recuiente y tabla datos
+    "Bustamante Proa Cristian Isaac",
+    "Chaire Urbieta Montserrat",
+    "Maga&ntilde;a L&oacute;pez Manuel",
+    "Espinosa Almaguer Emmanuel Gerard"
+  )
+  matriculas <- c("1952302", "2121239", "2177988", "2043930")
+  carreras <- c("ITS", "ITS", "ITS", "ITS")
+
+  tabla_rows <- paste0(
+    "<tr>",
+      "<td>", carreras, "</td>",
+      "<td>", matriculas, "</td>",
+      "<td>", nombres_html, "</td>",
+    "</tr>"
+  )
+  tabla_completa <- paste0(
+    "<table border='1' style='border-collapse:collapse; width:60%'>",
+      "<thead><tr><th>Carrera</th><th>Matricula</th><th>Nombre</th></tr></thead>",
+      "<tbody>", paste(tabla_rows, collapse = ""), "</tbody>",
+    "</table>"
+  )
+  output$tabla_html <- renderUI({
+    HTML(tabla_completa)
+  })
+
 
   # Render del gráfico de regresión lineal
   output$lmPlot <- renderPlot({
