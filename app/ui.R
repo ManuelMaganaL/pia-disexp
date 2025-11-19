@@ -145,7 +145,7 @@ ui <- navbarPage(
         col_widths = c(8, 4, 4),
         card(
           card_header(
-            "Gráfico de Regresión Lineal",
+            "Gráfico de la Regresión Lineal",
             style = "background-color: #2c3e50; color: white;"
           ),
           plotOutput("lmPlot", height = 400),
