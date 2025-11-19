@@ -191,5 +191,36 @@ ui <- navbarPage(
         )
       )
     )
+  ),
+  
+  tabPanel(
+    "ANOVA + Tukey",
+    icon = icon("chart-bar"),
+    page_sidebar(
+      sidebar = sidebar(
+        width = 300,
+        
+        h4("ANOVA + Tukey"),
+        
+        selectInput("y_anova", "Variable respuesta (Y):",
+                    choices = names(mtcars), selected = "mpg"),
+        
+        selectInput("factor_anova", "Variable Factor (categoría):",
+                    choices = names(mtcars), selected = "cyl")
+      ),
+      
+      layout_columns(
+        col_widths = c(8, 4),
+
+        card(
+          card_header("Resultados ANOVA"),
+          verbatimTextOutput("anovaSummary")
+        ),
+        card(
+          card_header("Prueba Tukey HSD"),
+          verbatimTextOutput("tukeySummary")
+        )
+      )
+    )
   )
 )

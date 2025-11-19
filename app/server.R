@@ -108,4 +108,34 @@ server <- function(input, output, session) {
       Valor = c(nrow(mtcars), ncol(mtcars), "1974", "Motor Trend US")
     )
   }, bordered = TRUE)
+  
+# ANOVA + TUKEY
+anova_data <- reactive({
+  req(input$y_anova, input$factor_anova)
+  
+  datos <- mtcars
+  datos$y <- datos[[input$y_anova]]
+  datos$grupo <- as.factor(datos[[input$factor_anova]])
+  
+  return(datos)
+})
+
+# Modelo ANOVA
+anova_model <- reactive({
+  datos <- anova_data()
+  aov(y ~ grupo, data = datos)
+})
+
+# Output: Resumen ANOVA
+output$anovaSummary <- renderPrint({
+  modelo <- anova_model()
+  summary(modelo)
+})
+
+# Output: Prueba Tukey
+output$tukeySummary <- renderPrint({
+  modelo <- anova_model()
+  TukeyHSD(modelo)
+})
+
 }
