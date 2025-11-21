@@ -3,6 +3,10 @@ library(bslib)
 library(readr)
 
 server <- function(input, output, session) {
+
+  #INTERRUPTOR 
+	output$mode <- renderText({ paste("You are in", input$mode, "mode.") })
+  
   # Reactive: Cargar datos (mtcars o CSV)
   current_data <- reactive({
     if (isTRUE(input$use_mtcars)) {
