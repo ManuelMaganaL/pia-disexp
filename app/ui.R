@@ -23,15 +23,60 @@ ui <- navbarPage(
   title = div(
     style = "display: flex; align-items: center;",
     icon("rocket", class = "me-2", style = "color: #3498db;"),
-    span("STATS EXPLORER", style = "font-weight: 700; color: #2c3e50;")
+    span("PIA DisExp", style = "font-weight: 700; color: #2c3e50;")
   ),
+  
   theme = theme,
   selected = "Introducción",
   
   # Modo oscuro/claro
   input_dark_mode(id = "mode", mode = "light"),
   
-  # Pestaña de Introducción - Mejorada
+  # Header 
+  header = tags$head(
+    tags$style(HTML("
+      .navbar-nav {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-left: -120px; 
+      }
+      
+      .nav-item {
+        margin: 0 10px;
+      }
+      
+      /* Estilo para los tabs */
+      .nav-link {
+        font-weight: 600;
+        font-size: 1.05em;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        margin: 0 3px;
+        padding: 8px 16px !important;
+      }
+      
+      .nav-link:hover {
+        background-color: rgba(52, 152, 219, 0.15) !important;
+        transform: translateY(-1px);
+      }
+      
+      .nav-link.active {
+        background-color: #3498db !important;
+        box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+      }
+      
+      /* Título del navbar */
+      .navbar-brand {
+        margin-right: 0;
+        padding: 10px 0;
+        margin-left: -100px;
+        left: 20px;
+      }
+    "))
+  ),
+  
+  # Pestaña de Introducción
   tabPanel(
     "Introducción",
     icon = icon("house-user"),
@@ -42,7 +87,7 @@ ui <- navbarPage(
         card(
           class = "text-center",
           card_header(
-            "🚀 Bienvenido a STATS EXPLORER",
+            "Producto Integrador de Aprendizaje - Diseño de Experimentos",
             style = "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-size: 1.5em;"
           ),
           card_body(
@@ -63,7 +108,7 @@ ui <- navbarPage(
         # Card del equipo
         card(
           card_header(
-            "👥 Nuestro Equipo",
+            "Equipo #5 - Grupo 005 V3",
             style = "background: linear-gradient(135deg, #2c3e50, #3498db); color: white;"
           ),
           card_body(
@@ -107,13 +152,12 @@ ui <- navbarPage(
         card(
           style = "background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border: none;",
           card_body(
-            h4("🎯 ¿Cómo empezar?", style = "color: #2c3e50;"),
+            h4("¿Cómo usar la aplicación?", style = "color: #2c3e50;"),
             tags$ol(
               style = "font-size: 1.1em; color: #5a6c7d;",
               tags$li("Ve a la pestaña 'Carga de datos' para seleccionar tu dataset"),
               tags$li("Explora 'Regresión Lineal' para análisis de correlación"),
               tags$li("Usa 'ANOVA + Tukey' para comparar grupos estadísticamente"),
-              tags$li("¡Experimenta con diferentes variables y configuraciones!")
             )
           )
         )
@@ -129,7 +173,7 @@ ui <- navbarPage(
       sidebar = sidebar(
         width = 350,
         style = "background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);",
-        h4("📁 Fuente de Datos", 
+        h4("Carga de datos", 
            style = "color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 15px;"),
         
         # Selector de dataset con mejor diseño
@@ -194,7 +238,7 @@ ui <- navbarPage(
       sidebar = sidebar(
         width = 320,
         style = "background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);",
-        h4("⚙️ Configuración del Modelo", 
+        h4("Configuración del Modelo", 
            style = "color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 15px;"),
         
         # Selectores de variables
@@ -215,7 +259,7 @@ ui <- navbarPage(
         # Opciones de visualización
         card(
           style = "background: white; margin-top: 15px;",
-          card_header("🎨 Personalizar Gráfico"),
+          card_header("Personalizar Gráfico"),
           card_body(
             checkboxInput("showLine", "Línea de regresión", value = TRUE),
             checkboxInput("showConfidence", "Intervalo de confianza", value = FALSE),
@@ -295,7 +339,7 @@ ui <- navbarPage(
       sidebar = sidebar(
         width = 320,
         style = "background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);",
-        h4("📊 Configuración ANOVA", 
+        h4("Configuración ANOVA", 
            style = "color: #2c3e50; border-bottom: 3px solid #e67e22; padding-bottom: 15px;"),
         
         card(
