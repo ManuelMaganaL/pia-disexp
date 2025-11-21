@@ -26,6 +26,10 @@ ui <- navbarPage(
   ),
   theme = theme,
   selected = "Introducción",
+
+  #PARTE BRILLANTE O OSCURA  
+  input_dark_mode( id = "mode", mode = "light" ),
+  
   tabPanel(
     "Introducción",
     icon = icon("house"),
@@ -207,40 +211,26 @@ ui <- navbarPage(
       )
     )
   ),
-  tabPanel(
+   tabPanel(
     "ANOVA + Tukey",
     icon = icon("chart-bar"),
     page_sidebar(
       sidebar = sidebar(
         width = 300,
         style = "background-color: #f8f9fa;",
-        h4("ANOVA + Tukey",
-          style = "color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;"
-        ),
-        selectInput("y_anova", "Variable respuesta (Y):",
-          choices = names(mtcars),
-          selected = "mpg"
-        ),
-        selectInput("factor_anova", "Variable Factor (categoría):",
-          choices = names(mtcars),
-          selected = "cyl"
-        )
+        h4("ANOVA + Tukey", style = "color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;"),
+        selectInput("y_anova", "Variable respuesta (Y):", choices = names(mtcars), selected = "mpg"),
+        selectInput("factor_anova", "Variable Factor (categoría):", choices = names(mtcars), selected = "cyl")
       ),
       layout_columns(
-        col_widths = c(8, 4),
+        col_widths = c(7, 5),
         card(
-          card_header(
-            "Resultados ANOVA",
-            style = "background-color: #2c3e50; color: white;"
-          ),
+          card_header("Resultados ANOVA", style = "background-color: #1abc9c; color: white;"),
           verbatimTextOutput("anovaSummary"),
           style = "border: 1px solid #dee2e6;"
         ),
         card(
-          card_header(
-            "Prueba Tukey HSD",
-            style = "background-color: #3498db; color: white;"
-          ),
+          card_header("Prueba Tukey HSD", style = "background-color: #e67e22; color: white;"),
           verbatimTextOutput("tukeySummary"),
           style = "border: 1px solid #dee2e6;"
         )
@@ -248,3 +238,4 @@ ui <- navbarPage(
     )
   )
 )
+
