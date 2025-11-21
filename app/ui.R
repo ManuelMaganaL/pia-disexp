@@ -49,7 +49,7 @@ ui <- navbarPage(
             ),
             hr(style = "border-top: 2px solid #3498db;"),
             h4("Integrantes del Equipo",
-              style = "color: #2c3e50; margin-bottom: 15px;"
+              style = "color: #5bc0de; margin-bottom: 15px;"
             ),
             tags$table(
               class = "table table-bordered table-striped",
@@ -112,7 +112,7 @@ ui <- navbarPage(
             conditionalPanel(
               condition = "input.use_mtcars == true",
               h4("Características del dataset mtcars:",
-                style = "color: #2c3e50; margin-bottom: 15px;"
+                style = "color: #5bc0de; margin-bottom: 15px;"
               ),
               tableOutput("tabla_resumen"),
             ),
