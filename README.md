@@ -9,24 +9,21 @@
 
 Ejecución desde la GUI de R (RGui)
 ```r
-# Desde la RGui instala shiny
+# Desde la RGui instala shiny, bslib y readr (Requerimientos)
 install.packages("shiny")
+install.packages("bslib")
+install.packages("readr")
 
 # Una vez instalado, importalo
 library(shiny)
+library(bslib)
+library(readr)
 
-# Ejecuta la aplicación usando la ruta a la carpeta con app.R
-runApp("C:/Users/manuel/Documentos/pia-disexp/app")
-```
+# Ejecuta la aplicación desde la terminal de R (debes tener instalados los requerimientos)
+dentro de la carpeta del proyecto ejecuta la terminal de R
+ejecuta el comando >source("app/app.R")
+el intérprete ejecutará la aplicación y dará un output de enlace
+  > http://127.0.0.1:5000
 
-Ejecución desde la terminal (debes tener instalada la libreria shiny)
-```sh
-# Entrar al repositorio
-cd pia-disexp
+para seguir el link se puede copiar y pegar en un navegador o dependiendo el IDE usado se desplegará como una pestaña extra
 
-# Ejecutar la aplicación
-Rscript ./init.R
-
-# Abrir el enlace del output
-http://127.0.0.1:5000
-```
